@@ -2,7 +2,7 @@
 {
     public class ListRequestModel
     {
-        public string Action { get; set; } = "Get";
+        public string Action { get; set; } = "List";
         public string Where { get; set; } = "Status = true";
         public string Order { get; set; } = "";
         public int Page { get; set; } = 1;
