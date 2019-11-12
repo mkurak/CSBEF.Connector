@@ -86,7 +86,7 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> GetWithAutAsync<T>(GetWithAuthWithHashRequestModel args)
+        public async Task<ReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
@@ -111,7 +111,7 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> GetAsync<T>(GetWithHashRequestModel args)
+        public async Task<ReturnModel<T>> GetAsync<T>(GetRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
@@ -175,6 +175,159 @@ namespace CSBEF.Connector
 
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.PostAsync(generateUrl, args.FormData).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> ListWithHashAsync<T>(ListWithHashAsyncRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateHash = Tools.ToSha1(args.Where + args.Order + args.Page + args.PageSize + args.HashSecretKey);
+
+                generateUrl += "&Hash=" + generateHash;
+
+                using var httpClient = new HttpClient();
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateHash = Tools.ToSha1(args.Where + args.Order + args.Page + args.PageSize + args.HashSecretKey);
+
+                generateUrl += "&Hash=" + generateHash;
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> ListAsync<T>(ListRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+
+                using var httpClient = new HttpClient();
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?" + args.Params;
+
+                using var httpClient = new HttpClient();
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
+                string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+            }
+
+            return rtn;
+        }
+
+        public async Task<ReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+
+            try
+            {
+                var generateUrl = ServiceUrl + args.Action + "?" + args.Params;
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
+                using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
             }

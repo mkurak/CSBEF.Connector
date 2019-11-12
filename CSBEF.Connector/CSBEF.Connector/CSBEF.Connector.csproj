@@ -12,7 +12,8 @@
     <PackageProjectUrl>https://github.com/mkurak/CSBEF.Connector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mkurak/CSBEF.Connector</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>- Version of first release</PackageReleaseNotes>
+    <PackageReleaseNotes>- Added some new functions</PackageReleaseNotes>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
