@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CSBEF.Connector
 {
-    public class ApiConnectionHelper
+    public class ApiConnectionHelper : IApiConnectionHelper
     {
         private ILogger<ILog> Logger { get; set; }
         private string ModuleName { get; set; }
@@ -161,8 +161,7 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> PostFileAsync<T, T2>(PostFileRequestModel args)
-            where T2 : class
+        public async Task<ReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
@@ -186,7 +185,7 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> ListWithHashAsync<T>(ListWithHashAsyncRequestModel args)
+        public async Task<ReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
@@ -196,7 +195,8 @@ namespace CSBEF.Connector
             try
             {
                 var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
-                var generateHash = Tools.ToSha1(args.Where + args.Order + args.Page + args.PageSize + args.HashSecretKey);
+                var stringOfHash = args.Where + args.Order + args.Page.ToString() + args.PageSize.ToString() + args.HashSecretKey;
+                var generateHash = Tools.ToSha1(stringOfHash);
 
                 generateUrl += "&Hash=" + generateHash;
 

@@ -12,8 +12,8 @@
     <PackageProjectUrl>https://github.com/mkurak/CSBEF.Connector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mkurak/CSBEF.Connector</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>- Fixed default action values in list query models</PackageReleaseNotes>
-    <Version>1.2.1</Version>
+    <PackageReleaseNotes>- Fixed some bugs</PackageReleaseNotes>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace CSBEF.Connector.Models
 {
-    public class ListWithHashAsyncRequestModel
+    public class ListWithHashRequestModel
     {
         public string Action { get; set; } = "List";
         public string Where { get; set; } = "Status = true";
