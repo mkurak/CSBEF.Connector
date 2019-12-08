@@ -1,22 +1,22 @@
 ﻿using CSBEF.Connector.Models;
-using CSBEF.Core.Models;
+using CSBEF.Core.Interfaces;
 using System.Threading.Tasks;
 
 namespace CSBEF.Connector.Interfaces
 {
     public interface IApiConnectionHelper
     {
-        Task<ReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args);
-        Task<ReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args);
-        Task<ReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args);
-        Task<ReturnModel<T>> GetAsync<T>(GetRequestModel args);
-        Task<ReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args) where T2 : class;
-        Task<ReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args);
-        Task<ReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args);
-        Task<ReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args);
-        Task<ReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args);
-        Task<ReturnModel<T>> ListAsync<T>(ListRequestModel args);
-        Task<ReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args);
-        Task<ReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args);
+        Task<IReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args);
+        Task<IReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args);
+        Task<IReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args);
+        Task<IReturnModel<T>> GetAsync<T>(GetRequestModel args);
+        Task<IReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args) where T2 : class;
+        Task<IReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args);
+        Task<IReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args);
+        Task<IReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args);
+        Task<IReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args);
+        Task<IReturnModel<T>> ListAsync<T>(ListRequestModel args);
+        Task<IReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args);
+        Task<IReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args);
     }
 }

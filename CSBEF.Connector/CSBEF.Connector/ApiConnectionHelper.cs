@@ -2,6 +2,7 @@
 using CSBEF.Connector.Enums;
 using CSBEF.Connector.Interfaces;
 using CSBEF.Connector.Models;
+using CSBEF.Core.Interfaces;
 using CSBEF.Core.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -31,12 +32,12 @@ namespace CSBEF.Connector
             ServiceUrl = ApiUrl + "/" + ModuleName + "/" + ServiceName + "/";
         }
 
-        public async Task<ReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args)
+        public async Task<IReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -58,12 +59,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args)
+        public async Task<IReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -86,12 +87,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args)
+        public async Task<IReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -111,12 +112,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> GetAsync<T>(GetRequestModel args)
+        public async Task<IReturnModel<T>> GetAsync<T>(GetRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -135,13 +136,13 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args)
+        public async Task<IReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args)
             where T2 : class
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -161,12 +162,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args)
+        public async Task<IReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -185,12 +186,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args)
+        public async Task<IReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -213,12 +214,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args)
+        public async Task<IReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -241,12 +242,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args)
+        public async Task<IReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -266,12 +267,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> ListAsync<T>(ListRequestModel args)
+        public async Task<IReturnModel<T>> ListAsync<T>(ListRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -290,12 +291,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args)
+        public async Task<IReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
@@ -314,12 +315,12 @@ namespace CSBEF.Connector
             return rtn;
         }
 
-        public async Task<ReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args)
+        public async Task<IReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            ReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
 
             try
             {
