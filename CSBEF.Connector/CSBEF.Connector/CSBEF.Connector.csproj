@@ -12,13 +12,12 @@
     <PackageProjectUrl>https://github.com/mkurak/CSBEF.Connector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mkurak/CSBEF.Connector</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <PackageReleaseNotes>- Include CSBEF.Core dependency</PackageReleaseNotes>
-    <Version>1.2.3</Version>
+    <PackageReleaseNotes>- Fixed some bugs</PackageReleaseNotes>
+    <Version>1.2.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CS.CommonTools" Version="1.0.0" />
-    <PackageReference Include="CSBEF.Core" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.7">
       <PrivateAssets>all</PrivateAssets>

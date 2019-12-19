@@ -1,10 +1,6 @@
 ﻿using CS.CommonTools;
-using CSBEF.Connector.Enums;
 using CSBEF.Connector.Interfaces;
 using CSBEF.Connector.Models;
-using CSBEF.Core.Interfaces;
-using CSBEF.Core.Models;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -16,15 +12,13 @@ namespace CSBEF.Connector
 {
     public class ApiConnectionHelper : IApiConnectionHelper
     {
-        private ILogger<ILog> Logger { get; set; }
         private string ModuleName { get; set; }
         private string ServiceName { get; set; }
         private string ApiUrl { get; set; }
         private string ServiceUrl { get; set; }
 
-        public ApiConnectionHelper(ILogger<ILog> logger, string moduleName, string serviceName, string apiUrl)
+        public ApiConnectionHelper(string moduleName, string serviceName, string apiUrl)
         {
-            Logger = logger;
             ModuleName = moduleName;
             ServiceName = serviceName;
             ApiUrl = apiUrl;
@@ -32,12 +26,12 @@ namespace CSBEF.Connector
             ServiceUrl = ApiUrl + "/" + ModuleName + "/" + ServiceName + "/";
         }
 
-        public async Task<IReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args)
+        public async Task<ConnectorReturnModel<T>> GetWithHashAsync<T>(GetWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -49,22 +43,27 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args)
+        public async Task<ConnectorReturnModel<T>> GetWithAuthWithHashAsync<T>(GetWithAuthWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -77,22 +76,27 @@ namespace CSBEF.Connector
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args)
+        public async Task<ConnectorReturnModel<T>> GetWithAutAsync<T>(GetWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -102,22 +106,27 @@ namespace CSBEF.Connector
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> GetAsync<T>(GetRequestModel args)
+        public async Task<ConnectorReturnModel<T>> GetAsync<T>(GetRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -126,23 +135,28 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args)
+        public async Task<ConnectorReturnModel<T>> PostAsync<T, T2>(PostRequestModel<T2> args)
             where T2 : class
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -152,22 +166,27 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.PostAsync(generateUrl, content).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args)
+        public async Task<ConnectorReturnModel<T>> PostFileAsync<T>(PostFileRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -176,22 +195,27 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.PostAsync(generateUrl, args.FormData).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args)
+        public async Task<ConnectorReturnModel<T>> ListWithHashAsync<T>(ListWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -204,22 +228,31 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse, new JsonSerializerSettings {
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    
+                });
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args)
+        public async Task<ConnectorReturnModel<T>> ListWithAuthWithHashAsync<T>(ListWithAuthWithHashRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -232,22 +265,27 @@ namespace CSBEF.Connector
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args)
+        public async Task<ConnectorReturnModel<T>> ListWithAutAsync<T>(ListWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -257,22 +295,27 @@ namespace CSBEF.Connector
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> ListAsync<T>(ListRequestModel args)
+        public async Task<ConnectorReturnModel<T>> ListAsync<T>(ListRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -281,22 +324,27 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args)
+        public async Task<ConnectorReturnModel<T>> CustomGetAsync<T>(CustomGetRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -305,22 +353,27 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
         }
 
-        public async Task<IReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args)
+        public async Task<ConnectorReturnModel<T>> CustomGetWithAutAsync<T>(CustomGetWithAutRequestModel args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            IReturnModel<T> rtn = new ReturnModel<T>(Logger);
+            ConnectorReturnModel<T> rtn = new ConnectorReturnModel<T>();
 
             try
             {
@@ -330,11 +383,16 @@ namespace CSBEF.Connector
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ReturnModel<T>>(apiResponse);
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse);
             }
             catch (Exception ex)
             {
-                rtn = rtn.SendError(GlobalErrors.TechnicalError, ex);
+                rtn.Error = new ConnectorErrorResult
+                {
+                    Status = true,
+                    Code = "000",
+                    Message = ex.Message != null ? ex.Message : "error"
+                };
             }
 
             return rtn;
