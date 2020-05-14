@@ -1,3 +1,5 @@
+![.NET Core](https://github.com/mkurak/CSBEF.Connector/workflows/.NET%20Core/badge.svg)
+
 # CSBEF.Connector
 .NET Core library used to access CSBEF API from other applications
 
