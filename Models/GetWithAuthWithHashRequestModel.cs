@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSBEF.Connector.Models
 {
@@ -8,8 +6,8 @@ namespace CSBEF.Connector.Models
     {
         public string Action { get; set; } = "Get";
         public string Where { get; set; } = "Status = true";
-        public string Order { get; set; } = "";
-        public string Token { get; set; } = "";
-        public string HashSecretKey { get; set; } = "";
+        public string Order { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
+        public string HashSecretKey { get; set; } = string.Empty;
     }
 }

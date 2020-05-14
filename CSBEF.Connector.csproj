@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Mesut Kurak</Authors>
+    <Company>Code Scientific</Company>
+    <Description>A library used to connect to CSBEF API from MVC and other applications.</Description>
+    <Copyright>2019 Code Scientific</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/mkurak/CSBEF.Connector</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mkurak/CSBEF.Connector</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageReleaseNotes>
+      - The CS.CommonTools dependency has been removed.
+      - A new helper class has been added (Tools)
+      - Dotnet Core version upgraded (3.1)
+      - CSBEF.Core version upgraded (3.1.2)
+      - CSBEF.Module.UserManagement version upgraded (3.1.2)
+    </PackageReleaseNotes>
+    <Version>1.3.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSBEF.Core" Version="3.1.2" />
+    <PackageReference Include="CSBEF.Module.UserManagement" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

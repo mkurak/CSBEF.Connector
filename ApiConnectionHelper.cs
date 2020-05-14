@@ -1,4 +1,4 @@
-﻿using CS.CommonTools;
+﻿using CSBEF.Connector.Helpers;
 using CSBEF.Connector.Interfaces;
 using CSBEF.Connector.Models;
 using Newtonsoft.Json;
@@ -219,7 +219,7 @@ namespace CSBEF.Connector
 
             try
             {
-                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page=" + args.Page + "&PageSize=" + args.PageSize;
                 var stringOfHash = args.Where + args.Order + args.Page.ToString() + args.PageSize.ToString() + args.HashSecretKey;
                 var generateHash = Tools.ToSha1(stringOfHash);
 
@@ -228,10 +228,11 @@ namespace CSBEF.Connector
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
                 string apiResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse, new JsonSerializerSettings {
+                rtn = JsonConvert.DeserializeObject<ConnectorReturnModel<T>>(apiResponse, new JsonSerializerSettings
+                {
                     TypeNameHandling = TypeNameHandling.Auto,
                     NullValueHandling = NullValueHandling.Ignore,
-                    
+
                 });
             }
             catch (Exception ex)
@@ -256,7 +257,7 @@ namespace CSBEF.Connector
 
             try
             {
-                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page=" + args.Page + "&PageSize=" + args.PageSize;
                 var generateHash = Tools.ToSha1(args.Where + args.Order + args.Page + args.PageSize + args.HashSecretKey);
 
                 generateUrl += "&Hash=" + generateHash;
@@ -289,7 +290,7 @@ namespace CSBEF.Connector
 
             try
             {
-                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page=" + args.Page + "&PageSize=" + args.PageSize;
 
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", args.Token);
@@ -319,7 +320,7 @@ namespace CSBEF.Connector
 
             try
             {
-                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page="+ args.Page +"&PageSize=" + args.PageSize;
+                var generateUrl = ServiceUrl + args.Action + "?Where=" + args.Where + "&Order=" + args.Order + "&Page=" + args.Page + "&PageSize=" + args.PageSize;
 
                 using var httpClient = new HttpClient();
                 using var response = await httpClient.GetAsync(generateUrl).ConfigureAwait(false);
